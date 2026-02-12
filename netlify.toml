@@ -1,0 +1,6 @@
+[build]
+  publish = "."  # Folder tempat index.html berada
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild" # Default
