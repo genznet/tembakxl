@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>GenZNet TembakXL</title>
+</head>
+<body>
+    <h1>Tembak XL Dashboard</h1>
+    <button id="runBtn">Jalankan Script Sekarang</button>
+    <pre id="log"></pre>
+
+    <script>
+        document.getElementById('runBtn').onclick = async () => {
+            const log = document.getElementById('log');
+            log.innerText = "Sedang memproses... mohon tunggu.";
+            
+            try {
+                const response = await fetch('/.netlify/functions/api');
+                const data = await response.json();
+                log.innerText = "Respon Server: " + data.message;
+            } catch (err) {
+                log.innerText = "Error: " + err;
+            }
+        };
+    </script>
+</body>
+</html>
