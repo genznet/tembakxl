@@ -1,26 +1,34 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <title>GenZNet TembakXL</title>
+    <title>GenZTalk - Tembak XL</title>
+    <style>
+        button { padding: 10px; margin: 5px; cursor: pointer; }
+        #status { background: #eee; padding: 10px; margin-top: 10px; }
+    </style>
 </head>
 <body>
-    <h1>Tembak XL Dashboard</h1>
-    <button id="runBtn">Jalankan Script Sekarang</button>
-    <pre id="log"></pre>
+    <h1>XL Dashboard</h1>
+    <div id="userInfo">Memuat data user...</div>
+    <hr>
+    <button onclick="runMenu('2')">Cek Paket Saya</button>
+    <button onclick="runMenu('3')">Tembak Paket HOT</button>
+    
+    <div id="status">Pilih menu di atas.</div>
 
     <script>
-        document.getElementById('runBtn').onclick = async () => {
-            const log = document.getElementById('log');
-            log.innerText = "Sedang memproses... mohon tunggu.";
+        async function runMenu(menuId) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerText = "Memproses menu " + menuId + "...";
             
             try {
-                const response = await fetch('/.netlify/functions/api');
-                const data = await response.json();
-                log.innerText = "Respon Server: " + data.message;
+                const res = await fetch(`/.netlify/functions/api?choice=${menuId}`);
+                const data = await res.json();
+                statusDiv.innerText = JSON.stringify(data, null, 2);
             } catch (err) {
-                log.innerText = "Error: " + err;
+                statusDiv.innerText = "Error: " + err;
             }
-        };
+        }
     </script>
 </body>
 </html>
